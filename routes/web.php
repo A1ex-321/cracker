@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\DemoController;
 use App\Http\Controllers\Admin\ScoController;
 use App\Http\Controllers\Machine\MachineController;
 use App\Http\Controllers\Admin\MachineController1;
+use App\Http\Controllers\crack\CrackerController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SitemapController;
 
@@ -165,25 +166,30 @@ Route::get('admin/admin/delete/{id}', [AdminController::class, 'admin_add_delete
 });
 
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
- Route::get('/', [MachineController::class, 'index']);
- Route::get('/about', [MachineController::class, 'about']);
- Route::get('/service', [MachineController::class, 'service']);
- Route::get('/getservice', [MachineController::class, 'getservice'])->name('getservice');
+//  Route::get('/', [MachineController::class, 'index']);
+//  Route::get('/about', [MachineController::class, 'about']);
+//  Route::get('/service', [MachineController::class, 'service']);
+//  Route::get('/getservice', [MachineController::class, 'getservice'])->name('getservice');
 
- Route::get('/blog', [MachineController::class, 'blog']);
- Route::get('/contact', [MachineController::class, 'contact']);
- Route::get('/singleblog', [MachineController::class, 'singleblog']);
+//  Route::get('/blog', [MachineController::class, 'blog']);
+//  Route::get('/contact', [MachineController::class, 'contact']);
+//  Route::get('/singleblog', [MachineController::class, 'singleblog']);
  Route::get('admin', [AuthController::class, 'login']);
  Route::post('admin', [AuthController::class, 'auth_login_admin']);
  Route::get('admin/logout', [AuthController::class, 'logout_admin']);
- Route::get('/header', [MachineController::class, 'get_logo1']);
- Route::post('/contact', [MachineController::class, 'store'])->name('contact.store');
- Route::get('/profile', [MachineController::class, 'get_profile']);
- Route::get('/service1', [MachineController::class, 'get_service']);
- Route::get('/singleblog/{id}/{slug}', [MachineController::class, 'get_blog']);
- Route::get('/allget', [MachineController::class, 'get_all']);
- Route::get('/singleblog/{id}', [MachineController::class, 'get_single_blog']);
- Route::get('sitemap.xml', [SitemapController::class, 'index']);
+//  Route::get('/header', [MachineController::class, 'get_logo1']);
+//  Route::post('/contact', [MachineController::class, 'store'])->name('contact.store');
+//  Route::get('/profile', [MachineController::class, 'get_profile']);
+//  Route::get('/service1', [MachineController::class, 'get_service']);
+//  Route::get('/singleblog/{id}/{slug}', [MachineController::class, 'get_blog']);
+//  Route::get('/allget', [MachineController::class, 'get_all']);
+//  Route::get('/singleblog/{id}', [MachineController::class, 'get_single_blog']);
+//  Route::get('sitemap.xml', [SitemapController::class, 'index']);
+
+Route::get('/', [CrackerController::class, 'index'])->name('/');
+Route::get('/about', [CrackerController::class, 'about'])->name('about');
+Route::get('/category', [CrackerController::class, 'category'])->name('category');
+Route::get('/contact', [CrackerController::class, 'contact'])->name('contact');
 
 
 
