@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\MachineController1;
 use App\Http\Controllers\crack\CrackerController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\Admin\CrackadminController;
 
 
 // use App\Http\Controllers\Admin\Website;
@@ -190,8 +191,23 @@ Route::get('/', [CrackerController::class, 'index'])->name('/');
 Route::get('/about', [CrackerController::class, 'about'])->name('about');
 Route::get('/category', [CrackerController::class, 'category'])->name('category');
 Route::get('/contact', [CrackerController::class, 'contact'])->name('contact');
+Route::get('/cart', [CrackerController::class, 'cart'])->name('cart');
 
 
+
+Route::middleware('auth')->group(function () {
+    Route::get('admin/category/list', [CrackadminController::class, 'category_list'])->name('category-list');
+     Route::post('admin/category/add', [CrackadminController::class, 'category_add'])->name('add-category');
+     Route::get('admin/category/edit/{id}', [CrackadminController::class, 'categoryedit']);
+     Route::post('admin/category/update/{id}', [CrackadminController::class, 'category_update'])->name('updatecategory');
+     Route::get('admin/category/deletecategory/{id}', [CrackadminController::class, 'deletecategory']);
+    //  items
+    Route::get('admin/item/itemlist', [CrackadminController::class, 'itemlist'])->name('item-list');
+    Route::post('admin/item/add', [CrackadminController::class, 'create_item'])->name('create-item');
+     Route::get('admin/item/edit/{id}', [CrackadminController::class, 'item_edit']);
+     Route::post('admin/item/update/{id}', [CrackadminController::class, 'item_update'])->name('item-update');
+     Route::get('admin/item/delete/{id}', [CrackadminController::class, 'item_delete']);
+});
 
     Route::middleware('auth')->group(function () {
             // service

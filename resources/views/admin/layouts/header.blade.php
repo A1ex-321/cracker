@@ -125,15 +125,15 @@
 
     </li><!-- End Components Nav -->
     <li class="nav-item">
-      <a href="{{route('ser-list')}}" class="nav-link {{ request()->segment(2) === 'service1' ? '' : 'collapsed' }}">
-        <i class="bi bi-person"></i><span>Service</span>
+      <a href="{{route('category-list')}}" class="nav-link {{ request()->segment(2) === 'category' ? '' : 'collapsed' }}">
+        <i class="bi bi-person"></i><span>Category</span>
       </a>
     </li>
-    <li class="nav-item">
-      <a href="{{route('Banner-list')}}" class="nav-link {{ request()->segment(2) === 'Banner' ? '' : 'collapsed' }}">
-      <i class="bi-align-center"></i><span>Banner</span>
+     <li class="nav-item">
+      <a href="{{route('item-list')}}" class="nav-link {{ request()->segment(2) === 'item' ? '' : 'collapsed' }}">
+      <i class="bi-align-center"></i><span>Items</span>
       </a>
-    </li>
+    </li> 
     <!-- <li class="nav-item">
       <a href="{{route('blog-list')}}" class="nav-link {{ request()->segment(2) === 'blog' ? '' : 'collapsed' }}">
         <i class="bi bi-journal-text"></i><span>Work</span>
@@ -141,22 +141,23 @@
     </li> -->
     <!-- End Forms Nav -->
    
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a href="{{ route('blogsco-list') }}" class="nav-link {{ request()->is('admin/blogseo/*') ? '' : 'collapsed' }}">
         <i class="bi bi-layout-text-window-reverse" aria-hidden="true"></i><span> Blog</span>
       </a>
-    </li><!-- End Tables Nav -->
-    <li class="nav-item">
+    </li> -->
+    <!-- End Tables Nav -->
+    <!-- <li class="nav-item">
       <a href="{{ route('detail-list') }}" class="nav-link {{ request()->is('admin/detail/*') ? '' : 'collapsed' }}">
         <i class="bi bi-ticket-detailed-fill" aria-hidden="true"></i><span> Details</span>
       </a>
-    </li>
+    </li> -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a href="{{ route('social-list') }}" class="nav-link {{ request()->is('admin/social/*') ? '' : 'collapsed' }}">
         <i class="bi bi-airplane-fill" aria-hidden="true"></i><span> Social link & query</span>
       </a>
-    </li>
+    </li> -->
     <li class="nav-item">
       <a href="{{ route('blog-logo') }}" class="nav-link {{ request()->is('admin/logo/*') ? '' : 'collapsed' }}">
         <i class="bi bi-bar-chart" aria-hidden="true"></i><span>Logo</span>

@@ -56,10 +56,7 @@
                                 </li>
                             </ul>
                             <div class="partner-btn">
-                                <a class="cmn-btn" style="background-color: #fa5f0b; color: #fff;" href="about.html">
-                                    Know More
-                                    <i class='bx bx-right-arrow-alt'></i>
-                                </a>
+                                
                             </div>
                         </div>
                     </div>

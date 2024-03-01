@@ -11,7 +11,10 @@ class Machineservice extends Model
     protected $table = 'machineservice';
 
     protected $fillable = [
-        'id','title', 'spantitle', 'content','machinetitle','image','machineimage','description','is_service','servicetitle','servicedescription'
+        'id','title', 'image'
     ];
-   
+    public function items()
+    {
+        return $this->hasMany(Item::class, 'category_id', 'id');
+    }
 }
