@@ -9,7 +9,7 @@ use App\Models\Detail;
 use App\Models\Mailstores;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Addservice;
+use App\Models\Order;
 use App\Models\Banner;
 use App\Models\social;
 use App\Models\Item;
@@ -159,8 +159,18 @@ class CrackadminController extends Controller
         $image->delete();
         return redirect('admin/item/itemlist')->with('success', ' Deleted successful');
     }
-
-
+    public function orderlist(Request $request)
+    {
+         $data['order'] = Order::all();
+        
+        return view('admin.crack.orderlist',$data);
+    }
+    public function order_delete($id, Request $request)
+    {
+        $image = Order::find($id);
+        $image->delete();
+        return redirect('admin/order/orderlist')->with('success', ' Deleted successful');
+    }
 
 
 

@@ -95,6 +95,7 @@
 
 
 
+@include('admin.layouts.message')
 
 
 <section class="offer-area offer-area-four pt-20 pb-70">
@@ -105,7 +106,7 @@
     @foreach($allrecord as $machineservice) <!-- Iterate over each Machineservice model in the collection -->
     <div class="container">
         @if($machineservice->items->isNotEmpty()) <!-- Check if the items collection for this Machineservice is not empty -->
-        <h2 style="background-color: #fa5f0b; color: #fff;" class="text-center">{{ $machineservice->title }}</h2> <!-- Access the title of the current Machineservice -->
+        <h2 style="background-color: #fa5f0b; color: #fff;" id="{{$machineservice->id}}"class="text-center">{{ $machineservice->title }}</h2> <!-- Access the title of the current Machineservice -->
         @endif
         <div class="row" >
             @foreach($machineservice->items as $item) <!-- Iterate over each item associated with the current Machineservice -->
@@ -183,10 +184,29 @@
 
     @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    // Execute the script when the document is ready
+    $(document).ready(function() {
+        console.log("Page is ready");
 
-    <script>
-     
-    </script>
+        // Get the machine ID from the query parameter in the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var machineId = urlParams.get('id');
+        console.log("Machine ID:", machineId);
+
+        // Scroll to the element with the corresponding ID
+        if (machineId) {
+            var element = $('#' + machineId);
+            if (element.length) {
+                $('html, body').animate({
+                    scrollTop: element.offset().top
+                }, 'slow');
+            }
+        }
+    });
+</script>
+
+
 
 
 

@@ -67,7 +67,7 @@
 <!-- Custom JS -->
 <script src="{{ asset('public/crack/js/custom.js') }}"></script>
 <script src="{{ asset('public/crack/js/script.js') }}"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </body>
 
 <!-- Mirrored from templates.envytheme.com/robtic/default/ by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 23 Aug 2023 13:29:07 GMT -->

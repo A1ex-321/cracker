@@ -1,4 +1,5 @@
 // Function to increment and decrement quantity
+
 function incrementQuantity(itemId, price) {
     var quantityInput = document.getElementById('quantity_' + itemId);
     var totalAmount = document.getElementById('total_amount_' + itemId);
@@ -53,17 +54,14 @@ function updateTotalAmount1() {
 }
 function addToCart(routeUrl) {
     var itemDivs = document.querySelectorAll('#items');
-    
+
     // Retrieve existing cart items from local storage
     var existingItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    
-    // Array to hold all the item information objects
-    var allItems = existingItems.slice(); // Copy existing items to preserve them
-    
+
     itemDivs.forEach(function(itemDiv) {
         var totalAmountElement = itemDiv.querySelector('.total-amount');
         var totalAmountValue = parseFloat(totalAmountElement.innerText);
-        
+
         if (totalAmountValue > 0) {
             var product1 = itemDiv.querySelector('.item-mid h6');
             var product = product1.innerText;
@@ -71,32 +69,43 @@ function addToCart(routeUrl) {
             var productPriceElement = itemDiv.querySelector('.item-mid #pri');
             var id1 = itemDiv.querySelector('.item-mid #itemid');
             var totalPriceElement = itemDiv.querySelector('.item-right .total-amount');
-            
+
             var price = parseFloat(productPriceElement.innerText.match(/\d+/)[0]);
             var total = parseFloat(totalPriceElement.innerText);
             var quantity = total / price;
 
             var imageElement = itemDiv.querySelector('.item-left img');
             var imageUrl = imageElement.getAttribute('src');
-            
             var id = id1.innerText;
 
-            var itemInfo = {
-                id: id,
-                productName: product,
-                price: price,
-                totalAmount: total,
-                quantity: quantity,
-                image: imageUrl
-            };
-            // Push the item information object to the array
-            allItems.push(itemInfo);
-        } 
+            // Check if the item already exists in the cartItems array
+            var existingItem = existingItems.find(function(item) {
+                return item.id === id;
+            });
+
+            if (existingItem) {
+                // If the item exists, update its quantity and total amount
+                existingItem.quantity += quantity;
+                existingItem.totalAmount += total;
+            } else {
+                // If the item doesn't exist, create a new item information object
+                var itemInfo = {
+                    id: id,
+                    productName: product,
+                    price: price,
+                    totalAmount: total,
+                    quantity: quantity,
+                    image: imageUrl
+                };
+                // Push the new item information object to the existingItems array
+                existingItems.push(itemInfo);
+            }
+        }
     });
-    
+
     // Store the updated array containing all item information in localStorage
-    localStorage.setItem('cartItems', JSON.stringify(allItems));
-    console.log("local", allItems);
+    localStorage.setItem('cartItems', JSON.stringify(existingItems));
+    console.log("local", existingItems);
 
     // Redirect to the route URL
     window.location.href = routeUrl;
@@ -104,7 +113,55 @@ function addToCart(routeUrl) {
 
 
 
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var subTotalContainer = document.querySelector('#pay');
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Compute sub-total amount
+        var subTotalAmount = cartItems.reduce(function(acc, item) {
+            return acc + parseFloat(item.totalAmount);
+        }, 0);
+
+        // Update HTML content
+        subTotalContainer.innerHTML = `₹${subTotalAmount.toFixed(2)}`;
+    });
+
    
+    function removeCartItems() {
+        // Remove cartItems from local storage
+        console.log("fdafd");
+        localStorage.removeItem('cartItems');
+    }
+
+
+
+    // Execute the script when the document is ready
+    $(document).ready(function() {
+        console.log("Page is ready");
+
+        // Get the machine ID from the query parameter in the URL
+        var urlParams = new URLSearchParams(window.location.search);
+        var machineId = urlParams.get('id');
+        console.log("Machine ID:", machineId);
+
+        // Scroll to the element with the corresponding ID
+        if (machineId) {
+            var element = $('#' + machineId);
+            if (element.length) {
+                // Adjust the speed and offset as per your requirements
+                var speed = 1; // Speed in milliseconds (e.g., 1500ms = 1.5 seconds)
+                var offset = 100; // Offset from the top in pixels
+        
+                $('html, body').animate({
+                    scrollTop: element.offset().top - offset // Adjust the offset
+                }, speed);
+            }
+        }
+        
+        
+    });
+
 
 
 

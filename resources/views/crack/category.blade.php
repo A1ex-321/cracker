@@ -32,16 +32,17 @@
     <div class="container">
         <div class="row">
             @foreach($all as $machine)
-            <div class="col-sm-6 col-lg-3">
-                <div class="offer-item">
+            <div class="col-sm-6 col-lg-3" id="{{$machine->id}}">
+                    <div class="offer-item">
                     <div class="offer-top">
-                        <img src="{{ asset('public/images/' . $machine->image) }}" alt="Offer">
+                        <img href="#" src="{{ asset('public/images/' . $machine->image) }}" alt="Offer">
                     </div>
                     <div class="offer-bottom">
-                        <h3 class="py-4">
-                            <a href="#">{{ $machine->title }}</a>
-                        </h3>
-                    </div>
+    <h3 class="py-4">
+    <a onclick="addToCart('{{ route('/', ['id' => $machine->id]) }}')" style="cursor: pointer;">{{ $machine->title }}</a>
+
+    </h3>
+</div>
                     <div class="offer-shape">
                         <img src="{{ asset('public/crack/img/home-two/offer-shape.png') }}" alt="Offer">
                     </div>
@@ -49,23 +50,7 @@
             </div>
             @endforeach
 
-            <div class="col-sm-6 col-lg-3">
-                <div class="offer-item">
-                    <div class="offer-top">
-                        <img src="{{ asset('public/crack/img/home-two/bijili.png') }}" alt="Offer">
-                    </div>
-                    <div class="offer-bottom">
-                        <h3 class="py-4">
-                            <a href="#">Bijili</a>
-                        </h3>
-
-                    </div>
-                    <div class="offer-shape">
-                        <img src="{{ asset('public/crack/img/home-two/offer-shape.png') }}" alt="Offer">
-
-                    </div>
-                </div>
-            </div>
+           
 
 
 
@@ -78,6 +63,9 @@
 @endsection
 
 @push('scripts')
+<script>
+
+</script>
 <script>
 
 </script>

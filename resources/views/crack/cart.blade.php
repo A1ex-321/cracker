@@ -1,12 +1,55 @@
 @extends('crack.layout.app')
 
 @section('content')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <style>
     .tick-button {
         background-color: green;
         color: white;
         border: none;
         /* Remove border */
+    }
+
+    .checkout-btn {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    #checkout-link {
+        width: 300px;
+        height: 56px;
+        border-radius: 40px;
+        background-color: #4CAF50;
+        /* Green background */
+        border: none;
+        color: white;
+        /* White text */
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 10px 20px;
+        transition: background-color 0.3s;
+        /* Add transition for smooth hover effect */
+    }
+
+    #checkout-link:hover {
+        background-color: #45a049;
+        /* Darker green on hover */
+    }
+
+    #checkout-link h6 {
+        margin: 0;
+        /* Remove default margin for h6 */
+        font-size: 16px;
+        /* Adjust font size */
+        font-weight: normal;
+        /* Reset font weight */
+        margin-bottom: 5px;
+        /* Add some bottom margin */
     }
 </style>
 <div class="page-title-area">
@@ -54,9 +97,10 @@
                         <div class="add-more">
                             <a href="{{route('/')}}">Add More Item</a>
                         </div>
-                        <div class="add-more">
-                            <a style="background-color:green;" href="{{route('/')}}">update cart</a>
+                        <div class="add-more" id="add" style="display:none;">
+                            <a style="background-color:green; cursor: pointer;" onclick="updatecart()">update cart</a>
                         </div>
+
                     </div>
 
                 </div>
@@ -77,12 +121,47 @@
                             <h6>Handling Fee :</h6>
                             <h6>₹0.00</h6>
                         </div>
-                        <div class="checkout-btn">
-                            <a href="details1.html">
-                                <h6>Checkout</h6>
-                                <h6>₹0.00</h6>
-                            </a>
-                        </div>
+                        <form action="{{route('checkout.store')}}" method="POST" onsubmit="return validateForm()">
+                            @csrf
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="number">Phone Number:</label>
+                                <input type="text" class="form-control" id="number" name="number" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="address">Address:</label>
+                                    <textarea class="form-control" id="address" name="address" required></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="state">State:</label>
+                                    <input type="text" class="form-control" id="state" name="state" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="city">City:</label>
+                                    <input type="text" class="form-control" id="city" name="city" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="pincode">Pin Code:</label>
+                                    <input type="text" class="form-control" id="pincode" name="pincode" required>
+                                </div>
+                                <input type="hidden" id="cartItems" name="cartItems" value="">
+
+                                <div class="checkout-btn">
+                                    <!-- Add onclick attribute to call checkoutClicked() function -->
+                                    <button id="checkout-link" style="cursor:pointer;" type="submit" onclick="">
+                                        <h6>Checkout</h6>
+                                        <h6>₹0.00</h6>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -93,6 +172,40 @@
 
 @endsection
 <script>
+    // Function to validate the form
+    // Get the cartItems from local storage
+    document.addEventListener('DOMContentLoaded', function() {
+
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Convert the cartItems array to a JSON string
+        var cartItemsJson = JSON.stringify(cartItems);
+
+        // Set the value of the hidden input field
+        document.getElementById('cartItems').value = cartItemsJson;
+    });
+   
+    document.addEventListener('DOMContentLoaded', function() {
+    // Function to remove cart items from local storage
+    function removeCartItems() {
+        localStorage.removeItem('cartItems');
+    }
+
+    // Execute after form submission
+    document.querySelector('form').addEventListener('submit', function(event) {
+        // Prevent the default form submission behavior
+        event.preventDefault();
+        
+        // Call removeCartItems function after a small delay to ensure the form submission has completed
+        setTimeout(removeCartItems, 1000); // Adjust the delay as needed
+
+        // Submit the form programmatically after the delay
+        setTimeout(function() {
+            event.target.submit();
+        }, 1000); // Adjust the delay as needed
+    });
+});
+
     document.addEventListener('DOMContentLoaded', function() {
         var cartItemsContainer = document.getElementById('cartItemsContainer');
 
@@ -147,6 +260,9 @@
             });
         }
     });
+    // Function to handle click event on checkout link
+
+
 
     function incrementQty(itemId, price, qty) {
         var quantityInput = document.getElementById('cartItem_' + itemId);
@@ -173,7 +289,12 @@
         totalAmountElement.textContent = "Total: ₹" + newTotalAmount.toFixed(2); // Update HTML content
 
         // Show the tick button
-        // tickButton.style.display = 'block';
+        var addMoreElement = document.querySelector('#add');
+
+        // Log the addMoreElement to verify selection
+
+        // Set the display property of the add-more element to 'block'
+        addMoreElement.style.display = 'block';
     }
 
 
@@ -205,6 +326,12 @@
 
         // Show the tick button
         // tickButton.style.display = 'block';
+        var addMoreElement = document.querySelector('#add');
+
+        // Log the addMoreElement to verify selection
+
+        // Set the display property of the add-more element to 'block'
+        addMoreElement.style.display = 'block';
     }
 
 
@@ -231,6 +358,7 @@
             // Update total amount in checkout button
             updateCheckoutTotal(cartItems);
             updateSubTotal(cartItems);
+            updatepay(cartItems);
             // If cartItems array is empty, display a message indicating that the cart is empty
             if (cartItems.length === 0) {
                 var cartItemsContainer = document.getElementById('cartItemsContainer');
@@ -251,12 +379,13 @@
 
         // Update HTML content
         checkoutBtn.innerHTML = `
-        <a >
-            <h6>Checkout</h6>
-            <h6>₹${totalAmount.toFixed(2)}</h6>
-        </a>
+    <button id="checkout-link" style="cursor:pointer;border-radius:40px;" onclick="return validateFormAndRemoveCartItems()"type="submit">
+        <h6>Checkout</h6>
+        <h6>₹${totalAmount.toFixed(2)}</h6>
+    </button>
     `;
     }
+
 
     function updateSubTotal(cartItems) {
         var subTotalContainer = document.querySelector('.sub-total');
@@ -272,6 +401,34 @@
         <h6>₹${totalAmount.toFixed(2)}</h6>
     `;
     }
+
+    function updatepay(cartItems) {
+        var subTotalContainer = document.querySelector('#pay');
+
+        // Compute total amount
+        var totalAmount = cartItems.reduce(function(acc, item) {
+            return acc + parseFloat(item.totalAmount);
+        }, 0);
+
+        // Update HTML content
+        subTotalContainer.innerHTML = `
+        ₹${totalAmount.toFixed(2)}
+    `;
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var subTotalContainer = document.querySelector('#pay');
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        // Compute sub-total amount
+        var subTotalAmount = cartItems.reduce(function(acc, item) {
+            return acc + parseFloat(item.totalAmount);
+        }, 0);
+
+        // Update HTML content
+        subTotalContainer.innerHTML = `
+        ₹${subTotalAmount.toFixed(2)}
+    `;
+    });
     document.addEventListener('DOMContentLoaded', function() {
         var subTotalContainer = document.querySelector('.sub-total');
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
@@ -288,7 +445,6 @@
     `;
     });
     document.addEventListener('DOMContentLoaded', function() {
-
         var checkoutBtn = document.querySelector('.checkout-btn');
         var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
 
@@ -299,12 +455,62 @@
 
         // Update HTML content
         checkoutBtn.innerHTML = `
-        <a >
-            <h6>Checkout</h6>
-            <h6>₹${totalAmount.toFixed(2)}</h6>
-        </a>
+    <button id="checkout-link" style="cursor:pointer; border-radius:40px;"onclick="return validateFormAndRemoveCartItems()"  type="submit">
+        <h6>Checkout</h6>
+        <h6>₹${totalAmount.toFixed(2)}</h6>
+    </button>
     `;
     });
+
+
+    function updatecart() {
+        var subTotalContainer = document.querySelector('#cartItemsContainer');
+        var cartElements = subTotalContainer.querySelectorAll('.cart1');
+
+        // Retrieve cart items from local storage
+        var cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+        cartElements.forEach(function(cartElement) {
+            var cartId = cartElement.id;
+            var splitCartId = cartId.split('_');
+            var cartItemId = splitCartId[1];
+
+            var qtyElement = cartElement.querySelector('.cart-mid2 h6');
+            var totelement = cartElement.querySelector('.cart-right h6');
+
+            var qtyText = qtyElement.textContent.trim();
+            var qtyValue = parseInt(qtyText.split(':')[1].trim());
+            var totalText = totelement.textContent.trim();
+            var totalValue = parseFloat(totalText.split('₹')[1].trim());
+
+            // Update cart item in local storage by ID
+            cartItems.forEach(function(item) {
+                if (item.id === cartItemId) {
+                    item.quantity = qtyValue;
+                    item.totalAmount = totalValue;
+                }
+            });
+        });
+
+        // Update local storage with the modified cart items
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        updateCheckoutTotal(cartItems);
+        updateSubTotal(cartItems);
+        updatepay(cartItems);
+        var addMoreElement = document.querySelector('#add');
+
+        // Log the addMoreElement to verify selection
+
+        // Set the display property of the add-more element to 'block'
+        addMoreElement.style.display = 'none';
+        Swal.fire({
+            icon: 'success',
+            title: 'Cart updated successfully!',
+            showConfirmButton: false,
+            timer: 1500
+        });
+
+    }
 </script>
 @push('scripts')
 

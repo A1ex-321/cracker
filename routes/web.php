@@ -192,6 +192,7 @@ Route::get('/about', [CrackerController::class, 'about'])->name('about');
 Route::get('/category', [CrackerController::class, 'category'])->name('category');
 Route::get('/contact', [CrackerController::class, 'contact'])->name('contact');
 Route::get('/cart', [CrackerController::class, 'cart'])->name('cart');
+Route::post('/checkout', [CrackerController::class, 'store'])->name('checkout.store');
 
 
 
@@ -207,6 +208,9 @@ Route::middleware('auth')->group(function () {
      Route::get('admin/item/edit/{id}', [CrackadminController::class, 'item_edit']);
      Route::post('admin/item/update/{id}', [CrackadminController::class, 'item_update'])->name('item-update');
      Route::get('admin/item/delete/{id}', [CrackadminController::class, 'item_delete']);
+    //  order
+    Route::get('admin/order/orderlist', [CrackadminController::class, 'orderlist'])->name('order-list');
+    Route::get('admin/order/delete/{id}', [CrackadminController::class, 'order_delete']);
 });
 
     Route::middleware('auth')->group(function () {

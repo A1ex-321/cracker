@@ -133,7 +133,12 @@
       <a href="{{route('item-list')}}" class="nav-link {{ request()->segment(2) === 'item' ? '' : 'collapsed' }}">
       <i class="bi-align-center"></i><span>Items</span>
       </a>
-    </li> 
+    </li>
+    <li class="nav-item">
+      <a href="{{route('order-list')}}" class="nav-link {{ request()->segment(2) === 'order' ? '' : 'collapsed' }}">
+      <i class="bi bi-border-bottom"></i><span>Orders</span>
+      </a>
+    </li>  
     <!-- <li class="nav-item">
       <a href="{{route('blog-list')}}" class="nav-link {{ request()->segment(2) === 'blog' ? '' : 'collapsed' }}">
         <i class="bi bi-journal-text"></i><span>Work</span>
