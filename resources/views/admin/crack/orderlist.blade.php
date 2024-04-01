@@ -45,7 +45,8 @@
                                                     <th>City</th>
                                                     <th>Pin code</th>
                                                     <th>Orders</th>
-                                                    <th>Edit & Delete</th>
+                                                    <th>Download</th>
+                                                    <th>Delete</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -60,8 +61,19 @@
                                                     <td>{{ $value->city}}</td>
                                                     <td>{{ $value->pincode}}</td>
                                                     <td>
-                                                        <button onclick="captureOrder({{ json_encode($value->cartItems) }})" type="button" class="btn btn-primary">Order</button>
-                                                    </td>
+    <button onclick="captureOrder({{ json_encode($value->cartItems) }})" type="button" class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+        Order
+    </button>
+</td>
+
+                                                    <td>
+    <a onclick="return confirm('Are you sure you want to download the PDF?')" href="{{ url('admin/order/download/' . $value->id) }}" class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+        <i class="fas fa-file-pdf"></i> Download
+    </a>
+</td>
+
+
+
                                                     <td>
                                                         <a onclick="return confirm('Are you sure you want to delete?')" href="{{url('admin/order/delete/'.$value->id)}}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
                                                     </td>

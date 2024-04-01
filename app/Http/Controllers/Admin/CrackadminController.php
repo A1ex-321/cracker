@@ -365,4 +365,39 @@ class CrackadminController extends Controller
         $user->delete();
         return redirect()->back()->with('success', 'Deleted');
     } 
+    public function get_logo1()
+    {
+        try {
+            $logo = Gallery::first();
+            // dd($logo);
+            if ($logo) {
+                $image = asset('public/images/' . $logo->image);
+                return response()->json(['image' => $image]);
+                // dd($logo);
+
+            } else {
+                return response()->json(['error' => 'No record found in the Gallery table']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Internal Server Error']);
+        }
+    }
+    public function store(Request $request)
+    {
+        // Extract form data
+        //  dd($request->all());
+        $name = $request->input('name');
+        $phone = $request->input('phone');
+        $message = $request->input('msg');
+
+        // Create a new record in the database
+        Mailstores::create([
+            'name' => $name,
+            'phone' => $phone,
+            'msg' => $message,
+        ]);
+
+        // Redirect or return a response
+        return redirect('/contact')->with('success', 'Message sent successfully');
+    }
 }

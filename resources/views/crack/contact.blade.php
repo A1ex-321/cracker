@@ -64,18 +64,19 @@
                     <div class="col-lg-6">
                         <div class="contact-item contact-right">
                             <h3>Get In Touch</h3>
-                            <form id="contactForm">
+                            <form action="{{ route('contact.store') }}" method="post"id="">
+                                @csrf
                                 <div class="row">
                                     <div class="col-sm-6 col-lg-6">
                                         <div class="form-group">
-                                            <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name" placeholder="Name">
+                                            <input type="text" name="name" id="name" class="form-control" required data-error="Please enter your name" placeholder="Name" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
         
                                     <div class="col-sm-6 col-lg-6">
                                         <div class="form-group">
-                                            <input type="number" name="phone" id="email" class="form-control" required data-error="Please enter your email" placeholder="Number">
+                                            <input type="number" name="phone" id="email" class="form-control" required data-error="Please enter your email" placeholder="Number" required>
                                             <div class="help-block with-errors"></div>
                                         </div>
                                     </div>
@@ -104,6 +105,7 @@
             </div>
         </section>
         <!-- End Contact -->
+        @include('crack.layout.message')
 
         <!-- Map -->
         <div class="map-area">

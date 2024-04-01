@@ -130,7 +130,7 @@
         <!-- End Counter -->
 
         <!-- Offer -->
-        <section class="offer-area offer-area-three pb-100 mt-5">
+        <!-- <section class="offer-area offer-area-three pb-100 mt-5">
             <div class="container">
                 <div class="section-title">
                     <span class="sub-title">Our Offers</span>
@@ -175,7 +175,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
         <!-- End Offer -->
  @endsection
 

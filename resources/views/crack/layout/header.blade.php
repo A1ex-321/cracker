@@ -121,8 +121,8 @@
         <!-- Mobile Device -->
         <div class="mobile-nav">
             <a href="{{ route('/') }}" class="logo" style="display: flex; gap: 5px;">
-                <div style="background-color: #fff; display: inline-block; padding: 5px;">
-                    <img src="{{ asset('public/crack/assets/img/yanai_logo.png') }}" class="main-logo" alt="Logo" height="40px" width="100px">
+                <div style=" display: inline-block;">
+                     <img src="{{ asset('public/crack/img/yanai_logo.png') }}" id="logo1" class="main-logo" alt="Logo" height="40px" width="100px"> 
                 </div>
 
                 <h6>Yanai <br> Crackers</h6>
@@ -133,8 +133,8 @@
         <div class="main-nav" style="background-color:#b3405d;">
             <div class="container">
                 <nav class="navbar navbar-expand-md navbar-light">
-                    <a class="navbar-brand" href="index.html">
-                        <img src="{{ asset('public/crack/img/yanai_logo.png') }}" class="main-logo" alt="Logo" height="60px" width="200px">
+                    <a class="navbar-brand" href="{{ route('/') }}">
+                        <img src="" class="main-logo" alt="Logo2" height="60px" id="logo2"width="200px">
                     </a>
                     <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
                         <ul class="navbar-nav">

@@ -193,7 +193,8 @@ Route::get('/category', [CrackerController::class, 'category'])->name('category'
 Route::get('/contact', [CrackerController::class, 'contact'])->name('contact');
 Route::get('/cart', [CrackerController::class, 'cart'])->name('cart');
 Route::post('/checkout', [CrackerController::class, 'store'])->name('checkout.store');
-
+Route::post('/contact', [CrackadminController::class, 'store'])->name('contact.store');
+Route::get('/header', [CrackadminController::class, 'get_logo1']);
 
 
 Route::middleware('auth')->group(function () {
@@ -211,6 +212,8 @@ Route::middleware('auth')->group(function () {
     //  order
     Route::get('admin/order/orderlist', [CrackadminController::class, 'orderlist'])->name('order-list');
     Route::get('admin/order/delete/{id}', [CrackadminController::class, 'order_delete']);
+ 
+
 });
 
     Route::middleware('auth')->group(function () {
