@@ -29,16 +29,18 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use App\Models\Contentblog;
 use App\Models\Team;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 class CrackadminController extends Controller
 {
- 
+
     public function category_list()
     {
-         
-        $data['category']= Machineservice::get();
 
-        return view('admin.crack.category',$data);
+        $data['category'] = Machineservice::get();
+
+        return view('admin.crack.category', $data);
     }
     public function category_add(Request $request)
     {
@@ -48,11 +50,11 @@ class CrackadminController extends Controller
             $filename = time() . '_' . str_replace(' ', '_', $images->getClientOriginalName());
             $images->move(public_path('images'), $filename);
         }
-      
+
         Machineservice::create([
             'image' => $filename,
             'title' => $request->title,
-   
+
 
         ]);
         return redirect('admin/category/list')->with('success', 'uploaded successfully.');
@@ -61,25 +63,23 @@ class CrackadminController extends Controller
     {
         $record = Machineservice::find($id);
         return response()->json($record);
-    } 
- 
-   
-    public function category_update(Request $request,$id)
+    }
+
+
+    public function category_update(Request $request, $id)
     {
         $user = Machineservice::find($id);
-       
+
         if ($request->hasFile('image')) {
             $images = $request->file('image');
 
             $filename = time() . '_' . str_replace(' ', '_', $images->getClientOriginalName());
             $images->move(public_path('images'), $filename);
-         $user->image=$filename;
-
-        }    
-        else{
-            $user->image=$user->image;
+            $user->image = $filename;
+        } else {
+            $user->image = $user->image;
         }
-        $user->title=$request->title;
+        $user->title = $request->title;
         $user->save();
         return redirect('admin/category/list')->with('success', 'updated successfully.');
     }
@@ -95,7 +95,7 @@ class CrackadminController extends Controller
         $data['category'] = Machineservice::all();
         $data['item'] = Item::with('category')->get();
         // dd($data['items']);
-        return view('admin.crack.itemlist',$data);
+        return view('admin.crack.itemlist', $data);
     }
     public function create_item(Request $request)
     {
@@ -113,25 +113,25 @@ class CrackadminController extends Controller
             $filename = time() . '_' . str_replace(' ', '_', $images->getClientOriginalName());
             $images->move(public_path('images'), $filename);
         }
-        $data->image = $filename;      
-        $data->name = $name;   
-        $data->box = $box;   
-        $data->price = $price;   
-        $data->category_id = $category_id;   
+        $data->image = $filename;
+        $data->name = $name;
+        $data->box = $box;
+        $data->price = $price;
+        $data->category_id = $category_id;
         $data->save();
         return redirect('admin/item/itemlist')->with('success', ' Added successfully.');
     }
     public function item_edit($id, Request $request)
     {
         $data['category'] = Machineservice::all();
-         $data['getRecord'] = Item::with('category')->find($id);
+        $data['getRecord'] = Item::with('category')->find($id);
         // dd($data['getRecord']);
         return view('admin.crack.edit_item', $data);
     }
     public function item_update($id, Request $request)
     {
 
-      
+
         $data = Item::find($id);
         $name = $request->input('name');
         $box = $request->input('box');
@@ -146,10 +146,10 @@ class CrackadminController extends Controller
         } else {
             $data->image = $data->image;
         }
-        $data->name = $name;   
-        $data->box = $box;   
-        $data->price = $price;   
-        $data->category_id = $category_id;  
+        $data->name = $name;
+        $data->box = $box;
+        $data->price = $price;
+        $data->category_id = $category_id;
         $data->save();
         return redirect('admin/item/itemlist')->with('success', ' updated');
     }
@@ -161,9 +161,9 @@ class CrackadminController extends Controller
     }
     public function orderlist(Request $request)
     {
-         $data['order'] = Order::all();
-        
-        return view('admin.crack.orderlist',$data);
+        $data['order'] = Order::all();
+
+        return view('admin.crack.orderlist', $data);
     }
     public function order_delete($id, Request $request)
     {
@@ -177,9 +177,9 @@ class CrackadminController extends Controller
 
     public function Bannerlist(Request $request)
     {
-         $data['getRecord'] = Banner::all();
+        $data['getRecord'] = Banner::all();
 
-        return view('admin.machine.banner',$data);
+        return view('admin.machine.banner', $data);
     }
     public function create_banner(Request $request)
     {
@@ -195,7 +195,7 @@ class CrackadminController extends Controller
             $filename = time() . '_' . str_replace(' ', '_', $images->getClientOriginalName());
             $images->move(public_path('images'), $filename);
         }
-        $data->image = $filename;      
+        $data->image = $filename;
         $data->save();
         return redirect('admin/Banner/Bannerlist')->with('success', ' Added successfully.');
     }
@@ -214,7 +214,7 @@ class CrackadminController extends Controller
     public function banner_update($id, Request $request)
     {
 
-      
+
         $data = Banner::find($id);
         $title = $request->input('title');
         $description = $request->input('description');
@@ -234,12 +234,12 @@ class CrackadminController extends Controller
     }
     public function detail_list()
     {
-         $data['getRecord'] = Detail::get();
+        $data['getRecord'] = Detail::get();
         //  $data['getRecord1'] = Machineservice::where('is_service', 1)->get();
 
         $data['header_title'] = "Admin List";
 
-        return view('admin.machine.detail',$data);
+        return view('admin.machine.detail', $data);
     }
     public function detail_add(Request $request)
     {
@@ -256,17 +256,17 @@ class CrackadminController extends Controller
         ]);
         return redirect('admin/detail/list')->with('success', 'uploaded successfully.');
     }
-    public function detail_update(Request $request,$id)
+    public function detail_update(Request $request, $id)
     {
         $user = Detail::find($id);
- 
+
         // $user->image=$filename;
-        $user->dnumber=$request->dnumber;
-        $user->wnumber=$request->wnumber;
-        $user->address=$request->address;
-        $user->mail=$request->mail;
-        $user->header=$request->header;
-        $user->footer=$request->footer;
+        $user->dnumber = $request->dnumber;
+        $user->wnumber = $request->wnumber;
+        $user->address = $request->address;
+        $user->mail = $request->mail;
+        $user->header = $request->header;
+        $user->footer = $request->footer;
 
         $user->save();
         return redirect('admin/detail/list')->with('success', 'updated successfully.');
@@ -285,16 +285,16 @@ class CrackadminController extends Controller
 
     public function social_list()
     {
-         $data['getRecord'] = social::where('is_social', 0)->get();
-         $data['getRecord1'] = social::where('is_social', 1)->get();
+        $data['getRecord'] = social::where('is_social', 0)->get();
+        $data['getRecord1'] = social::where('is_social', 1)->get();
 
         $data['header_title'] = "Admin List";
 
-        return view('admin.machine.social',$data);
+        return view('admin.machine.social', $data);
     }
     public function social_add(Request $request)
     {
- 
+
         social::create([
             'facebook' => $request->facebook,
             'twitter' => $request->twitter,
@@ -306,15 +306,15 @@ class CrackadminController extends Controller
         ]);
         return redirect('admin/social/list')->with('success', 'uploaded successfully.');
     }
-    public function social_update(Request $request,$id)
+    public function social_update(Request $request, $id)
     {
         $user = social::find($id);
-       
-   
-        $user->facebook=$request->facebook;
-        $user->twitter=$request->twitter;
-        $user->google=$request->google;
-        $user->instagram=$request->instagram;
+
+
+        $user->facebook = $request->facebook;
+        $user->twitter = $request->twitter;
+        $user->google = $request->google;
+        $user->instagram = $request->instagram;
 
         $user->save();
         return redirect('admin/social/list')->with('success', 'updated successfully.');
@@ -341,15 +341,15 @@ class CrackadminController extends Controller
         ]);
         return redirect('admin/social/list')->with('success', 'uploaded successfully.');
     }
-    public function query_update(Request $request,$id)
+    public function query_update(Request $request, $id)
     {
         $user = social::find($id);
-       
-        
+
+
         // $user->image=$filename;
-        $user->contact=$request->contact;
-        $user->description=$request->description;
-     
+        $user->contact = $request->contact;
+        $user->description = $request->description;
+
 
         $user->save();
         return redirect('admin/social/list')->with('success', 'updated successfully.');
@@ -364,7 +364,7 @@ class CrackadminController extends Controller
         $user = social::find($id);
         $user->delete();
         return redirect()->back()->with('success', 'Deleted');
-    } 
+    }
     public function get_logo1()
     {
         try {
@@ -400,4 +400,65 @@ class CrackadminController extends Controller
         // Redirect or return a response
         return redirect('/contact')->with('success', 'Message sent successfully');
     }
+    public function generatePDF($orderId)
+{
+    // Fetch order items from your database
+    $order = Order::findOrFail($orderId);
+    // dd($orderItems);
+    $orderItems = $order->items;
+    $logo = Gallery::first();
+
+    // return view('admin.crack.pdf', $orderItems);
+
+    // Load the HTML template
+    $html = view('admin.crack.pdf', compact('orderItems', 'order','logo'))->render();
+
+     $dompdf = new Dompdf();
+
+     $dompdf->loadHtml($html);
+
+
+     $dompdf->setPaper('A4', 'portrait');
+
+     $dompdf->render();
+
+     return $dompdf->stream('order_' . $orderId . '.pdf');
+}
+public function generatePDF1($orderId)
+{
+    // Fetch order details from your database
+    $order = Order::findOrFail($orderId);
+
+    // Fetch order items associated with the order
+    $orderItems = $order->items;
+    $logo = Gallery::first();
+
+    // Pass both order and orderItems data to the view
+    return view('admin.crack.pdfview', [
+        'order' => $order,
+        'orderItems' => $orderItems,
+        'logo' =>$logo
+    ]);
+}
+public function demo() {
+    $array = [10, 20, 30, 40];
+    $a = [];
+
+    for ($j = 0; $j < count($array); $j++) {
+        for ($k = 0; $k < count($array); $k++) {
+            if ($array[$j] < $array[$k]) {
+                $a[] = $array[$j];
+            }
+        }
+    }
+
+    // Remove duplicates and re-index the array
+    
+
+    dd($a); // Dump and die to display the result
+}
+
+
+
+
 }

@@ -212,8 +212,10 @@ Route::middleware('auth')->group(function () {
     //  order
     Route::get('admin/order/orderlist', [CrackadminController::class, 'orderlist'])->name('order-list');
     Route::get('admin/order/delete/{id}', [CrackadminController::class, 'order_delete']);
- 
+    Route::get('/generate-pdf/{orderId}', [CrackadminController::class, 'generatePDF'])->name('generate-pdf');
+    Route::get('/generate-pdf1/{orderId}', [CrackadminController::class, 'generatePDF1'])->name('generate-pdf1');
 
+    Route::get('demo/demo1', [CrackadminController::class, 'demo'])->name('g');
 });
 
     Route::middleware('auth')->group(function () {
@@ -300,6 +302,6 @@ Route::middleware('auth')->group(function () {
     Route::get('admin/contentblog/edit/{id}', [BlogController::class, 'content_edit']);
     Route::post('admin/updateblog/edit/{id}', [BlogController::class, 'create_content_update_blog'])->name('update-content');
     Route::get('admin/alex', [BlogController::class, 'demo']);
-
+    
     });
     

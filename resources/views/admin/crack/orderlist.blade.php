@@ -44,7 +44,7 @@
                                                     <th>state</th>
                                                     <th>City</th>
                                                     <th>Pin code</th>
-                                                    <th>Orders</th>
+                                                     <th>View</th> 
                                                     <th>Download</th>
                                                     <th>Delete</th>
                                                 </tr>
@@ -60,17 +60,23 @@
                                                     <td>{{ $value->state}}</td>
                                                     <td>{{ $value->city}}</td>
                                                     <td>{{ $value->pincode}}</td>
-                                                    <td>
+                                                    <!-- <td>
     <button onclick="captureOrder({{ json_encode($value->cartItems) }})" type="button" class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
         Order
     </button>
+</td> -->
+<td>
+    <a href="{{ route('generate-pdf1', ['orderId' => $value->id]) }}" class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+         View
+    </a>
 </td>
-
-                                                    <td>
-    <a onclick="return confirm('Are you sure you want to download the PDF?')" href="{{ url('admin/order/download/' . $value->id) }}" class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+<td>
+    <a href="{{ route('generate-pdf', ['orderId' => $value->id]) }}" class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
         <i class="fas fa-file-pdf"></i> Download
     </a>
 </td>
+
+
 
 
 
@@ -120,7 +126,7 @@
                         </table>
                         <div style="margin-left: 577px; font-size:21px;">
                             <span>Total :</span>
-                            <span id="total"></span>
+                            <span id="total"></span> 
                         </div>
 
                     </div>
@@ -149,7 +155,7 @@
     // Get the tbody element where we'll insert the table rows
     var itemList = document.getElementById('itemList');
 
-    // Clear any existing content in the tbody
+    // Clear any existing content in the tbodyr
     itemList.innerHTML = '';
 
     // Initialize total variable
@@ -176,7 +182,8 @@
         });
 
         // Update the #total span with the calculated total
-        document.getElementById('total').textContent = total.toFixed(2); // Adjust decimal places as needed
+        document.getElementById('total').textContent = total.toFixed(2);
+         // Adjust decimal places as needed
     } else {
         console.error('cartItems is not an array');
     }

@@ -9,6 +9,19 @@
 }
 
 </style>
+<style>
+    @media (max-width: 767px) { /* Apply styles for screens smaller than 768px (mobile devices) */
+        #mm {
+            width: 57%; /* Button spans full width */
+            max-width: none; /* Remove max-width */
+            height: 45px; /* Fixed height */
+            margin: 10px auto; /* Center align horizontally */
+            display: flex; /* Use flexbox */
+            align-items: center; /* Center align vertically */
+            justify-content: center; /* Center align horizontally */
+        }
+    }
+</style>
 
 
 <!-- Banner -->
@@ -141,10 +154,10 @@
         </div>
     </div>
     @endforeach
-    <button class="grant-total col-lg-3 col-md-12 col-sm-12 text-center" onclick="addToCart('{{ route('cart') }}')">
-    <h5 class="text-light">Add Checkout Total : ₹<span id="total_amount">0.00</span></h5>
-    
+    <button id="mm" class="grant-total col-lg-3 col-md-12 col-sm-12 text-center" onclick="addToCart('{{ route('cart') }}')" style="padding: 10px; background-color: #e35f3b; color: white; border: none; border-radius: 5px; margin-top: 10px;">
+    <h5>Add Checkout: ₹<span id="total_amount">0.00</span></h5>
 </button>
+
 
 
 
